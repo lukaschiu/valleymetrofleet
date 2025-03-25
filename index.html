@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
     <title>VM Vehicle Data</title>
 </head>
 <body>
@@ -11,7 +12,7 @@
     <p>By Make/Model</p>
     <ul id="bus-summary"></ul>
     
-    <p>Bus data source <a href="https://cptdb.ca/wiki/index.php/Valley_Metro#Current" target="_blank">CPTDB Wiki</a></p>
+    <p>Bus fleet data source <a href="https://cptdb.ca/wiki/index.php/Valley_Metro#Current" target="_blank">CPTDB Wiki</a></p>
 
 
 
@@ -31,6 +32,7 @@
                 const busList = document.getElementById("bus-list");
                 const busSummary = document.getElementById("bus-summary");
                 busList.innerHTML = "";
+                busSummary.innerHTML = "";
                 
                 if (vehicles.length === 0) {
                     busList.innerHTML = "No active vehicles found.";
@@ -150,7 +152,7 @@
                         else if(idNum>=3003 && idNUm <=3005){
                             busFleet.count3003to3005.count++;
                         }
-
+                        
                         else{
                             unknown++;
                         }
