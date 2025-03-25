@@ -36,7 +36,6 @@
                 
                 if (vehicles.length === 0) {
                     busList.innerHTML = "No active vehicles found.";
-                    busSummary.textContent = "";
                     return;
                 }
                 
@@ -119,6 +118,7 @@
                         
                         //Count fleet numbers
                         const idNum = parseInt(vehicleId, 10);
+                        
                         if(idNum >= 1605 && idNum <= 1611) {
                             busFleet.count1605to1611.count++;
                         }
@@ -154,7 +154,7 @@
                         }
                         
                         else{
-                            unknown++;
+                            busFleet.unknown.count++;
                         }
                     }
                 });
