@@ -159,8 +159,8 @@
 
                 //Print out by Make/Model
                 for(const key in busFleet){
-                    if(counts[key].count > 0){
-                        busSummary.innerHTML += `${counts[key].count} - ${counts[key].year} ${counts[key].make} ${counts[key].model}<br>`;
+                    if(busFleet[key].count > 0){
+                        busSummary.innerHTML += `${busFleet[key].count} - ${busFleet[key].year} ${busFleet[key].make} ${busFleet[key].model}<br>`;
                     }
                 }
 
