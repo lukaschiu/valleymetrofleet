@@ -3,13 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valley Metro Bus Tracker</title>
+    <title>VM Vehicle Data</title>
 </head>
 <body>
-    <h1>Currently Running Bus Fleet Numbers</h1>
-    <ul id="bus-list"></ul>
-    <p id="bus-summary"></p>
+    <h1>Valley Metro Vehicle Data</h1>
+    <!--<ul id="bus-list"></ul>-->
+    <p>By Make/Model</p>
+    <ul id="bus-summary"></ul>
     
+    <p>Bus data source <a href="https://cptdb.ca/wiki/index.php/Valley_Metro#Current" target="_blank">CPTDB Wiki</a></p>
+
+
+
     <script>
         async function fetchBusData() {
             const apiUrl = "https://mna.mecatran.com/utw/ws/gtfsfeed/vehicles/valleymetro?apiKey=4f22263f69671d7f49726c3011333e527368211f&asJson=true";
@@ -28,12 +33,81 @@
                 busList.innerHTML = "";
                 
                 if (vehicles.length === 0) {
-                    busList.innerHTML = "<li>No active vehicles found.</li>";
+                    busList.innerHTML = "No active vehicles found.";
                     busSummary.textContent = "";
                     return;
                 }
                 
-                let count1631to1642 = 0;
+                //DEF fleet numbers
+                let busFleet ={
+                    unknown: {count: 0},
+                    count101to150: {count: 0, year: 2008, make: "Kinki Sharyo", model: "LF LRV"}, //KinkiSharyo LRV
+                    count180to185: {count: 0, year: 2021, make: "Bookville", model: "Liberty"}, //Brookville Liberty Streetcar
+                    count201to225: {count: 0, year: 2021, make: "Siemens", model: "S700"}, //Siemens S700 LRV
+                    count1605to1611: {count: 0, year: 2017, make: "ENC", model: "EZ Rider II", length: 32, fuel: "CNG"},
+                    count1612and1623to1627: {count: 0, year: 2018, make: "ENC", model: "EZ Rider II", length: 32, fuel: "CNG"}, //2018 ENC E-Z Rider II BRT 32' CNG
+                    count1617to1622: {count: 0, year: 2018, make: "ARBOC", model: "Spirit of Liberty"}, //2018 ARBOC Spirit of Liberty 29'
+                    count1628to1630: {count: 0, year: 2018, make: "Freightliner/Startrans", model: "P/S2C"}, //2018 Freightliner S2 (StarTrans P/S2C)
+                    count1631to1642: {count: 0, year: 2019, make: "ENC", model: "EZ Rider II", length: 32, fuel: "CNG"}, //2019 ENC E-Z Rider II BRT 32' CNG
+                    count1643: {count: 0, year: 2020, make: "ARBOC", model: "Freedom"}, //2020 ARBOC Freedom
+                    count1644to1649: {count: 0, year: 2020, make: "ARBOC", model: "Equess", fuel: "CNG"}, //2020 ARBOC Equess CNG
+                    count1650to1666: {count: 0, year: 2021, make: "Gillig", model: "Low Floor", length: 29, fuel: "CNG"}, //2021 Gillig Low Floor CNG 29'
+                    count1667to1672: {count: 0, year: 2022, make: "Gillig", model: "Low Floor", length: 29, fuel: "CNG"}, //2022 Gillig Low Floor CNG 29'
+                    count3003to3005: {count: 0, year: 2016, make: "Ford/Starcraft", model: "E-450/Allstar"}, //2016 Ford E-450 (Starcraft Allstar)
+                    count3006to3008: {count: 0, year: 2020, make: "Ford/Starcraft", model: "E-450/Allstar"}, //2020 Ford E-450 (Starcraft Allstar)
+                    count3009to3011: {count: 0, year: 2021, make: "Ford/Starcraft", model: "E-450/Allstar"}, //2021 Ford E-450 (Starcraft Allstar)
+                    count3012to3018: {count: 0, year: 2022, make: "Ford/Starcraft", model: "E-450/Allstar"}, //2022 Ford E-450 (Starcraft Allstar)
+                    count3019to3022: {count: 0, year: 2023, make: "Ford/Starcraft", model: "E-450/Allstar"}, //2023 Ford E-450 (Starcraft Allstar)
+                    count4501to4504: {count: 0, year: 2013, make: "Gillig", model: "Low Floor Trolley Replica", length: 29, fuel: "HEV"}, //2013 Gillig Trolley Replica HEV 29'
+                    count4505to4508: {count: 0, year: 2013, make: "Gillig", model: "Low Floor", length: 29, fuel: "HEV"}, //2013 Gillig Low Floor HEV 29'
+                    count4509to4513: {count: 0, year: 2013, make: "Gillig", model: "Low Floor", length: 35, fuel: "HEV"}, //2013 Gillig Low Floow HEV 35'
+                    count4514to4517: {count: 0, year: 2017, make: "Gillig", model: "Low Floor", length: 35, fuel: "CNG"}, //2017 Gillig Low Floor CNG 35'
+                    count4518to4521: {count: 0, year: 2018, make: "Gillig", model: "Low Floor", length: 29, fuel: "CNG"}, //2018 Gillig Low Floor CNG 29'
+                    count4522to4524: {count: 0, year: 2020, make: "Gillig", model: "Low Floor", length: 35, fuel: "CNG"}, //2020 Gillig Low Floor CNG 35'
+                    count5001to5120: {count: 0, year: 2014, make: "New Flyer", model: "Low Floor Restyled (C40LFR)", length: 40, fuel: "CNG"}, //2014 NFI C40LFR
+                    count5121to5200: {count: 0, year: 2015, make: "Gillig", model: "Low Floor", length: 40, fuel: "CNG"}, //2015-2016 Gillig Low Floor CNG 40'
+                    count5241to5274: {count: 0, year: 2018, make: "Gillig", model: "Low Floor", length: 40, fuel: "CNG"}, //2018 Gillig Low Floor CNG 40'
+                    count5275to5278: {count: 0, year: 2020, make: "New Flyer", model: "Xcelsior (XN40)", length: 40, fuel: "CNG"}, //2020 NFI XN40
+                    count5279to5318: {count: 0, year: 2023, make: "Gillig", model: "Low Floor", length: 40, fuel: "CNG"}, //2023 Gillig Low Floor CNG 40'
+                    count5319to5536: {count: 0, year: 2023, make: "Gillig", model: "Low Floor", length: 40, fuel: "CNG"}, //2023 Gillig Low Floor CNG 40'
+                    count5337to5353: {count: 0, year: 2024, make: "Gillig", model: "Low Floor", length: 40, fuel: "CNG"}, //2024 Gillig Low Floor CNG 40'
+                    count5600to5611: {count: 0, year: 2018, make: "Gillig", model: "Low Floor", length: 40}, //2018 Gillig Low Floor 40'
+                    count5612to5644: {count: 0, year: 2019, make: "Gillig", model: "Low Floor", length: 40}, //2019 Gillig Low Floor 40'
+                    count5645to5661: {count: 0, year: 2020, make: "New Flyer", model: "Xcelsior (XD40)", length: 40, fuel: "Diesel"}, //2020 NFI XD40
+                    count5662to5691: {count: 0, year: 2021, make: "New Flyer", model: "Xcelsior (XD40)", length: 40, fuel: "Diesel"}, //2021 NFI XD40
+                    count5692to5711: {count: 0, year: 2024, make: "New Flyer", model: "Xcelsior (XDE40)", length: 40, fuel: "HEV"}, //2024 NFI XDE40
+                    count6676to6697: {count: 0, year: 2011, make: "New Flyer", model: "Low Floor Restyled (C40LFR)", length: 40, fuel: "CNG"}, //2011 NFI C40LFR
+                    count6698to6713: {count: 0, year: 2012, make: "New Flyer", model: "Low Floor Restyled (C40LFR)", length: 40, fuel: "CNG"}, //2012 NFI C40LFR
+                    count6714to6733: {count: 0, year: 2012, make: "New Flyer", model: "Low Floor Restyled Suburban (C40LFR)", length: 40, fuel: "CNG"}, //2012 NFI C40LFR (suburban)
+                    count6734to6749: {count: 0, year: 2012, make: "New Flyer", model: "Low Floor Restyled (C40LFR)", length: 40, fuel: "CNG"}, //2012 NFI C40LFR
+                    count6750to6758: {count: 0, year: 2016, make: "Gillig", model: "Low Floor", length: 40, fuel: "CNG"}, //2016 Gillig Low Floor CNG 40'
+                    count6759to6670: {count: 0, year: 2017, make: "Gillig", model: "Low Floor", length: 40, fuel: "CNG"}, //2017 Gillig Low Floor CNG 40'
+                    count6671to6810: {count: 0, year: 2018, make: "Gillig", model: "Low Floor", length: 40, fuel: "CNG"}, //2018 Gillig Low Floor CNG 40'
+                    count6811to6822: {count: 0, year: 2018, make: "New Flyer", model: "Xcelsior (XN40)", length: 40, fuel: "CNG"}, //2018 NFI XN40
+                    count6823to6846: {count: 0, year: 2019, make: "New Flyer", model: "Xcelsior (XN40)", length: 40, fuel: "CNG"}, //2019 NFI XN40
+                    count6847to6873: {count: 0, year: 2020, make: "New Flyer", model: "Xcelsior (XN40)", length: 40, fuel: "CNG"}, //2020 NFI XN40
+                    count6874to6885: {count: 0, year: 2021, make: "New Flyer", model: "Xcelsior (XD40)", length: 40, fuel: "Diesel"}, //2021 NFI XD40
+                    count6886to6898: {count: 0, year: 2021, make: "New Flyer", model: "Xcelsior (XN40)", length: 40, fuel: "CNG"}, //2021 NFI XN40
+                    count7001to7009: {count: 0, year: 2010, make: "New Flyer", model: "Low Floor Advanced (D40LFA)", length: 40, fuel: "Diesel"}, //2010 NFI D40LFA
+                    count7010to7013: {count: 0, year: 2020, make: "MCI", model: "D45CRT LE", length: 45, fuel: "Diesel"}, //2020 MCI D45CRT LE
+                    count7014to7033: {count: 0, year: 2021, make: "MCI", model: "D45CRT LE", length: 45, fuel: "Diesel"}, //2021 MCI D45CRT LE
+                    count7175to7172: {count: 0, year: 2016, make: "New Flyer", model: "Xcelsior (XN60)", length: 60, fuel: "CNG"}, //2016 NFI XN60 (RAPID)
+                    count7173to7174: {count: 0, year: 2018, make: "New Flyer", model: "Xcelsior (XN60)", length: 60, fuel: "CNG"}, //2018 NFI XN60 (RAPID)
+                    count7175to7185: {count: 0, year: 2019, make: "New Flyer", model: "Xcelsior (XN60)", length: 60, fuel: "CNG"}, //2019 NFI XN60 (RAPID)
+                    count7186to7192: {count: 0, year: 2020, make: "New Flyer", model: "Xcelsior (XN60)", length: 60, fuel: "CNG"}, //2020 NFI XN60 (RAPID)
+                    count7300to7309: {count: 0, year: 2017, make: "New Flyer", model: "Xcelsior (XN40)", length: 40, fuel: "CNG"}, //2017 NFI XN40 (RAPID)
+                    count7310to7323: {count: 0, year: 2019, make: "New Flyer", model: "Xcelsior (XN40)", length: 40, fuel: "CNG"}, //2019 NFI XN40 (RAPID)
+                    count7324to7328: {count: 0, year: 2020, make: "New Flyer", model: "Xcelsior (XN40)", length: 40, fuel: "CNG"}, //2020 NFI XN40 (RAPID)
+                    count8065to8081: {count: 0, year: 2011, make: "New Flyer", model: "Low Floor Restyled (DE60LFR)", length: 60, fuel: "HEV"}, //2011 NFI DE60LFR
+                    count8082to8101: {count: 0, year: 2016, make: "New Flyer", model: "Xcelsior (XD60)", length: 60, fuel: "Diesel"}, //2016 NFI XD60
+                    count8102to8121: {count: 0, year: 2017, make: "New Flyer", model: "Xcelsior (XD60)", length: 60, fuel: "Diesel"}, //2017 NFI XD60
+                    count8122to8127: {count: 0, year: 2019, make: "New Flyer", model: "Xcelsior (XD60)", length: 60, fuel: "Diesel"}, //2019 NFI XD60
+                    count8128to8155: {count: 0, year: 2020, make: "New Flyer", model: "Xcelsior (XD60)", length: 60, fuel: "Diesel"}, //2020 NFI XD60
+                    count8521to8530: {count: 0, year: 2017, make: "New Flyer", model: "Xcelsior (XN60)", length: 60, fuel: "CNG"}, //2017 NFI XN60
+                };
+
+
+
                 vehicles.forEach(vehicle => {
                     const vehicleId = vehicle.vehicle?.vehicle?.id;
                     if (vehicleId) {
@@ -41,18 +115,56 @@
                         listItem.textContent = vehicleId;
                         busList.appendChild(listItem);
                         
+                        //Count fleet numbers
                         const idNum = parseInt(vehicleId, 10);
-                        if (idNum >= 1631 && idNum <= 1642) {
-                            count1631to1642++;
+                        if(idNum >= 1605 && idNum <= 1611) {
+                            busFleet.count1605to1611.count++;
+                        }
+                        else if(idNum >= 1631 && idNum <= 1642) {
+                            busFleet.count1631to1642.count++;
+                        }
+                        else if(idNum == 1612 || (idNum >= 1623 && idNum <= 1627)){
+                            busFleet.count1612and1623to1627.count++;
+                        }
+                        else if(idNum >= 1617 && idNum <= 1622){
+                            busFleet.count1617to1622.count++;
+                        }
+                        else if(idNum >=1628  && idNum <=1630){
+                            busFleet.count1628to1630.count++;
+                        }
+                        else if(idNum >=1631  && idNum <=1642){
+                            busFleet.count1631to1642.count++;
+                        }
+                        else if(idNum == 1643){
+                            busFleet.count1643.count++;
+                        }
+                        else if(idNum>=1644  && idNum <=1649){
+                            busFleet.count1644to1649.count++;
+                        }
+                        else if(idNum>=1650 && idNUm <=1666){
+                            busFleet.count1650to1666.count++;
+                        }
+                        else if(idNum>=1667 && idNUm <=1672){
+                            busFleet.count1667to1672.count++;
+                        }
+                        else if(idNum>=3003 && idNUm <=3005){
+                            busFleet.count3003to3005.count++;
+                        }
+
+                        else{
+                            unknown++;
                         }
                     }
                 });
-                
-                if (count1631to1642 > 0) {
-                    busSummary.textContent = `Count of vehicles in range 1631-1642: ${count1631to1642} - 2019 ENC E-Z Rider II BRT 32' CNG`;
-                } else {
-                    busSummary.textContent = "No vehicles in range 1631-1642 currently running.";
+
+                //Print out by Make/Model
+                for(const key in busFleet){
+                    if(counts[key].count > 0){
+                        busSummary.innerHTML += `${counts[key].count} - ${counts[key].year} ${counts[key].make} ${counts[key].model}<br>`;
+                    }
                 }
+
+
             } catch (error) {
                 console.error("Error fetching bus data:", error);
             }
