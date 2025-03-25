@@ -6,9 +6,9 @@
     <title>Valley Metro Bus Tracker</title>
 </head>
 <body>
-    <h1>Currently Running Valley Metro Vehicles</h1>
+    <h1>Currently Running Bus Fleet Numbers</h1>
     <ul id="bus-list"></ul>
-    <p> id="bus-make-model"</p>
+    <p id="bus-summary"></p>
     
     <script>
         async function fetchBusData() {
@@ -24,10 +24,12 @@
                 const vehicles = data?.entity || [];
                 
                 const busList = document.getElementById("bus-list");
+                const busSummary = document.getElementById("bus-summary");
                 busList.innerHTML = "";
                 
                 if (vehicles.length === 0) {
                     busList.innerHTML = "<li>No active vehicles found.</li>";
+                    busSummary.textContent = "";
                     return;
                 }
                 
@@ -48,10 +50,9 @@
                 
                 if (count1631to1642 > 0) {
                     busSummary.textContent = `Count of vehicles in range 1631-1642: ${count1631to1642} - 2019 ENC E-Z Rider II BRT 32' CNG`;
-                } 
-                
-
-
+                } else {
+                    busSummary.textContent = "No vehicles in range 1631-1642 currently running.";
+                }
             } catch (error) {
                 console.error("Error fetching bus data:", error);
             }
