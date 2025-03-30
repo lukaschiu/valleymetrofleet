@@ -263,5 +263,8 @@ async function fetchBusData() {
         console.error("Error fetching bus data:", error);
     }
 }
-
 fetchBusData();
+
+//Refresh Every Minute
+setInterval(fetchBusData, 60000);
+window.addEventListener("beforeunload", () => clearInterval(intervalId));
