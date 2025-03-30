@@ -20,7 +20,7 @@
 
     <script>
         async function fetchBusData() {
-            const apiUrl = "https://mna.mecatran.com/utw/ws/gtfsfeed/vehicles/valleymetro?apiKey=4f22263f69671d7f49726c3011333e527368211f&asJson=true";
+            const apiUrl = `https://mna.mecatran.com/utw/ws/gtfsfeed/vehicles/valleymetro?apiKey=4f22263f69671d7f49726c3011333e527368211f&asJson=true&_=${new Date().getTime()}`;
             
             try {
                 const response = await fetch(apiUrl);
