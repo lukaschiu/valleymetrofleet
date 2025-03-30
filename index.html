@@ -8,9 +8,10 @@
 </head>
 <body>
     <h1>Valley Metro Vehicle Data</h1>
-    <!--<ul id="bus-list"></ul>-->
-    <p>By Make & Model</p>
+    <p>Count by Make & Model:</p>
     <ul id="bus-summary"></ul>
+    <p>All fleet numbers currently active:</p>
+    <ul id="bus-list"></ul>
     
     <p>Bus fleet data source <a href="https://cptdb.ca/wiki/index.php/Valley_Metro#Current" target="_blank">CPTDB Wiki</a></p>
 
@@ -118,8 +119,19 @@
                         
                         //Count fleet numbers
                         const idNum = parseInt(vehicleId, 10);
+                        //Light Rail/Streetcar Vehciles
+                        if(idNum >= 101 && idNum <= 150){
+                            busFleet.count101to150.count++;
+                        }
+                        else if(idNum >=180 && idNum <= 185){
+                            busFleet.count180to185.count++;
+                        }
+                        else if(idNum >= 201 && idNum <= 225){
+                            busFleet.count201to225.count++;
+                        }
 
-                        if(idNum >= 1605 && idNum <= 1611) {
+                        //BusFleet
+                        else if(idNum >= 1605 && idNum <= 1611) {
                             busFleet.count1605to1611.count++;
                         }
                         else if(idNum >= 1631 && idNum <= 1642) {
