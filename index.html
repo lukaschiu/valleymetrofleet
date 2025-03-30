@@ -114,7 +114,8 @@
                     const vehicleId = vehicle.vehicle?.vehicle?.id;
                     if (vehicleId) {
                         const listItem = document.createElement("li");
-                        
+                        listItem.textContent = vehicleId;
+
                         //Count fleet numbers
                         const idNum = parseInt(vehicleId, 10);
                         //Light Rail/Streetcar Vehciles
@@ -258,7 +259,6 @@
                             busFleet.unknown.count++;
                         }
 
-                        listItem.textContent = vehicleId;
                         busList.appendChild(listItem);
                     }
                 });
