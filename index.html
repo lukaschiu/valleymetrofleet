@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Valley Metro Vehicle Data</h1>
-    <ul id="bus-list"></ul>
+    <!--<ul id="bus-list"></ul>-->
     <p>By Make & Model</p>
     <ul id="bus-summary"></ul>
     
@@ -253,7 +253,12 @@
                 //Print out by Make/Model
                 for(const key in busFleet){
                     if(busFleet[key].count > 0){
-                        busSummary.innerHTML += `${busFleet[key].count} - ${busFleet[key].year} ${busFleet[key].make} ${busFleet[key].model} <br>`;
+                        if(busFleet[key] == unknown){
+                            busSummary.innerHTML += `${busFleet[key].count} - ${busFleet[key].make} <br>`;
+                        }
+                        else{
+                            busSummary.innerHTML += `${busFleet[key].count} - ${busFleet[key].year} ${busFleet[key].make} ${busFleet[key].model} <br>`;
+                        }
                     }
                 }
 
