@@ -1,7 +1,7 @@
 async function fetchBusData() {
     const apiUrl = `https://mna.mecatran.com/utw/ws/gtfsfeed/vehicles/valleymetro?apiKey=4f22263f69671d7f49726c3011333e527368211f&asJson=true&_=${new Date().getTime()}`;
     
-    try {
+    try{
         const response = await fetch(apiUrl);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -106,12 +106,11 @@ async function fetchBusData() {
                     busFleet.count101to150.count++;
                 }
                 else if(idNum >=180 && idNum <= 185){
-                    busFleet.count180to185.count++;
+                    busFleet.count180to185.count++; //Streetcar does not have GTFS-RT tracking to my knowledge
                 }
                 else if(idNum >= 201 && idNum <= 225){
                     busFleet.count201to225.count++;
                 }
-
                 //BusFleet
                 else if(idNum >= 1605 && idNum <= 1611) {
                     busFleet.count1605to1611.count++;
@@ -139,43 +138,62 @@ async function fetchBusData() {
                 }
                 else if (idNum >= 1650 && idNum <= 1666) {
                     busFleet.count1650to1666.count++;
-                } else if (idNum >= 1667 && idNum <= 1672) {
+                } 
+                else if (idNum >= 1667 && idNum <= 1672) {
                     busFleet.count1667to1672.count++;
-                } else if (idNum >= 3003 && idNum <= 3005) {
+                } 
+                else if (idNum >= 3003 && idNum <= 3005) {
                     busFleet.count3003to3005.count++;
-                } else if (idNum >= 3006 && idNum <= 3008) {
+                } 
+                else if (idNum >= 3006 && idNum <= 3008) {
                     busFleet.count3006to3008.count++;
-                } else if (idNum >= 3009 && idNum <= 3011) {
+                } 
+                else if (idNum >= 3009 && idNum <= 3011) {
                     busFleet.count3009to3011.count++;
-                } else if (idNum >= 5319 && idNum <= 5336) {
+                } 
+                else if (idNum >= 5319 && idNum <= 5336) {
                     busFleet.count5319to5336.count++;
-                } else if (idNum >= 5337 && idNum <= 5353) {
+                } 
+                else if (idNum >= 5337 && idNum <= 5353) {
                     busFleet.count5337to5353.count++;
-                } else if (idNum >= 5600 && idNum <= 5611) {
+                } 
+                else if (idNum >= 5600 && idNum <= 5611) {
                     busFleet.count5600to5611.count++;
-                } else if (idNum >= 5612 && idNum <= 5644) {
+                } 
+                else if (idNum >= 5612 && idNum <= 5644) {
                     busFleet.count5612to5644.count++;
-                } else if (idNum >= 5645 && idNum <= 5661) {
+                } 
+                else if (idNum >= 5645 && idNum <= 5661) {
                     busFleet.count5645to5661.count++;
-                } else if (idNum >= 5662 && idNum <= 5691) {
+                } 
+                else if (idNum >= 5662 && idNum <= 5691) {
                     busFleet.count5662to5691.count++;
-                } else if (idNum >= 5692 && idNum <= 5711) {
+                } 
+                else if (idNum >= 5692 && idNum <= 5711) {
                     busFleet.count5692to5711.count++;
-                } else if (idNum >= 6676 && idNum <= 6697) {
+                } 
+                else if (idNum >= 6676 && idNum <= 6697) {
                     busFleet.count6676to6697.count++;
-                } else if (idNum >= 6698 && idNum <= 6713) {
+                } 
+                else if (idNum >= 6698 && idNum <= 6713) {
                     busFleet.count6698to6713.count++;
-                } else if (idNum >= 6714 && idNum <= 6733) {
+                } 
+                else if (idNum >= 6714 && idNum <= 6733) {
                     busFleet.count6714to6733.count++;
-                } else if (idNum >= 6734 && idNum <= 6749) {
+                } 
+                else if (idNum >= 6734 && idNum <= 6749) {
                     busFleet.count6734to6749.count++;
-                } else if (idNum >= 6750 && idNum <= 6758) {
+                } 
+                else if (idNum >= 6750 && idNum <= 6758) {
                     busFleet.count6750to6758.count++;
-                } else if (idNum >= 6759 && idNum <= 6670) {
+                } 
+                else if (idNum >= 6759 && idNum <= 6670) {
                     busFleet.count6759to6670.count++;
-                } else if (idNum >= 6671 && idNum <= 6810) {
+                } 
+                else if (idNum >= 6671 && idNum <= 6810) {
                     busFleet.count6671to6810.count++;
-                } else if (idNum >= 6811 && idNum <= 6822) {
+                } 
+                else if (idNum >= 6811 && idNum <= 6822) {
                     busFleet.count6811to6822.count++;
                 }
                 else if(idNum >= 6823 && idNum <= 6846){
@@ -254,13 +272,26 @@ async function fetchBusData() {
             if(busFleet[key].count > 0){
                 if(key === "unknown"){
                     busSummary.innerHTML += `${busFleet[key].count} - ${busFleet[key].make} <br>`;
-                } else {
+                }
+                else if(busFleet[key].fuel != null || busFleet[key].length != null){
+                    if(busFleet[key].fuel != null && busFleet[key].length == null){
+                        busSummary.innerHTML += `${busFleet[key].count} - ${busFleet[key].year} ${busFleet[key].make} ${busFleet[key].model} ${busFleet[key].fuel} <br>`;
+                    }
+                    else if(busFleet[key].fuel == null && busFleet[key].length != null){
+                        busSummary.innerHTML += `${busFleet[key].count} - ${busFleet[key].year} ${busFleet[key].make} ${busFleet[key].model} ${busFleet[key].length}' <br>`;
+                    }
+                    else{
+                        busSummary.innerHTML += `${busFleet[key].count} - ${busFleet[key].year} ${busFleet[key].make} ${busFleet[key].model} ${busFleet[key].length}' ${busFleet[key].fuel} <br>`;  
+                    }
+                }
+                else {
                     busSummary.innerHTML += `${busFleet[key].count} - ${busFleet[key].year} ${busFleet[key].make} ${busFleet[key].model} <br>`;
                 }
             }
         }
 
-    } catch (error) {
+    } 
+    catch (error) {
         console.error("Error fetching bus data:", error);
     }
 }
