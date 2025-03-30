@@ -41,7 +41,7 @@
                 
                 //DEF fleet numbers
                 let busFleet ={
-                    unknown: {count: 0},
+                    unknown: {count: 0, make: "Unknown"},
                     count101to150: {count: 0, year: 2008, make: "Kinki Sharyo", model: "LF LRV"}, //KinkiSharyo LRV
                     count180to185: {count: 0, year: 2021, make: "Bookville", model: "Liberty"}, //Brookville Liberty Streetcar
                     count201to225: {count: 0, year: 2021, make: "Siemens", model: "S700"}, //Siemens S700 LRV
@@ -70,7 +70,7 @@
                     count5241to5274: {count: 0, year: 2018, make: "Gillig", model: "Low Floor", length: 40, fuel: "CNG"}, //2018 Gillig Low Floor CNG 40'
                     count5275to5278: {count: 0, year: 2020, make: "New Flyer", model: "Xcelsior (XN40)", length: 40, fuel: "CNG"}, //2020 NFI XN40
                     count5279to5318: {count: 0, year: 2023, make: "Gillig", model: "Low Floor", length: 40, fuel: "CNG"}, //2023 Gillig Low Floor CNG 40'
-                    count5319to5536: {count: 0, year: 2023, make: "Gillig", model: "Low Floor", length: 40, fuel: "CNG"}, //2023 Gillig Low Floor CNG 40'
+                    count5319to5336: {count: 0, year: 2023, make: "Gillig", model: "Low Floor", length: 40, fuel: "CNG"}, //2023 Gillig Low Floor CNG 40'
                     count5337to5353: {count: 0, year: 2024, make: "Gillig", model: "Low Floor", length: 40, fuel: "CNG"}, //2024 Gillig Low Floor CNG 40'
                     count5600to5611: {count: 0, year: 2018, make: "Gillig", model: "Low Floor", length: 40}, //2018 Gillig Low Floor 40'
                     count5612to5644: {count: 0, year: 2019, make: "Gillig", model: "Low Floor", length: 40}, //2019 Gillig Low Floor 40'
@@ -92,7 +92,7 @@
                     count7001to7009: {count: 0, year: 2010, make: "New Flyer", model: "Low Floor Advanced (D40LFA)", length: 40, fuel: "Diesel"}, //2010 NFI D40LFA
                     count7010to7013: {count: 0, year: 2020, make: "MCI", model: "D45CRT LE", length: 45, fuel: "Diesel"}, //2020 MCI D45CRT LE
                     count7014to7033: {count: 0, year: 2021, make: "MCI", model: "D45CRT LE", length: 45, fuel: "Diesel"}, //2021 MCI D45CRT LE
-                    count7175to7172: {count: 0, year: 2016, make: "New Flyer", model: "Xcelsior (XN60)", length: 60, fuel: "CNG"}, //2016 NFI XN60 (RAPID)
+                    count7165to7172: {count: 0, year: 2016, make: "New Flyer", model: "Xcelsior (XN60)", length: 60, fuel: "CNG"}, //2016 NFI XN60 (RAPID)
                     count7173to7174: {count: 0, year: 2018, make: "New Flyer", model: "Xcelsior (XN60)", length: 60, fuel: "CNG"}, //2018 NFI XN60 (RAPID)
                     count7175to7185: {count: 0, year: 2019, make: "New Flyer", model: "Xcelsior (XN60)", length: 60, fuel: "CNG"}, //2019 NFI XN60 (RAPID)
                     count7186to7192: {count: 0, year: 2020, make: "New Flyer", model: "Xcelsior (XN60)", length: 60, fuel: "CNG"}, //2020 NFI XN60 (RAPID)
@@ -143,25 +143,108 @@
                         else if(idNum>=1644  && idNum <=1649){
                             busFleet.count1644to1649.count++;
                         }
-                        else if(idNum>=1650 && idNUm <=1666){
+                        else if (idNum >= 1650 && idNum <= 1666) {
                             busFleet.count1650to1666.count++;
-                        }
-                        else if(idNum>=1667 && idNUm <=1672){
+                        } else if (idNum >= 1667 && idNum <= 1672) {
                             busFleet.count1667to1672.count++;
-                        }
-                        else if(idNum>=3003 && idNUm <=3005){
+                        } else if (idNum >= 3003 && idNum <= 3005) {
                             busFleet.count3003to3005.count++;
-                        }
-                        else if(idNum>=3006 && idNum <=3008){
+                        } else if (idNum >= 3006 && idNum <= 3008) {
                             busFleet.count3006to3008.count++;
-                        }
-                        else if(idNum>=3009 && idNum <=3011){
+                        } else if (idNum >= 3009 && idNum <= 3011) {
                             busFleet.count3009to3011.count++;
+                        } else if (idNum >= 5319 && idNum <= 5336) {
+                            busFleet.count5319to5336.count++;
+                        } else if (idNum >= 5337 && idNum <= 5353) {
+                            busFleet.count5337to5353.count++;
+                        } else if (idNum >= 5600 && idNum <= 5611) {
+                            busFleet.count5600to5611.count++;
+                        } else if (idNum >= 5612 && idNum <= 5644) {
+                            busFleet.count5612to5644.count++;
+                        } else if (idNum >= 5645 && idNum <= 5661) {
+                            busFleet.count5645to5661.count++;
+                        } else if (idNum >= 5662 && idNum <= 5691) {
+                            busFleet.count5662to5691.count++;
+                        } else if (idNum >= 5692 && idNum <= 5711) {
+                            busFleet.count5692to5711.count++;
+                        } else if (idNum >= 6676 && idNum <= 6697) {
+                            busFleet.count6676to6697.count++;
+                        } else if (idNum >= 6698 && idNum <= 6713) {
+                            busFleet.count6698to6713.count++;
+                        } else if (idNum >= 6714 && idNum <= 6733) {
+                            busFleet.count6714to6733.count++;
+                        } else if (idNum >= 6734 && idNum <= 6749) {
+                            busFleet.count6734to6749.count++;
+                        } else if (idNum >= 6750 && idNum <= 6758) {
+                            busFleet.count6750to6758.count++;
+                        } else if (idNum >= 6759 && idNum <= 6670) {
+                            busFleet.count6759to6670.count++;
+                        } else if (idNum >= 6671 && idNum <= 6810) {
+                            busFleet.count6671to6810.count++;
+                        } else if (idNum >= 6811 && idNum <= 6822) {
+                            busFleet.count6811to6822.count++;
                         }
-                        else if(idNum>=5319 && idNum <=5536){
-                            busFleet.count5319to5536.count++;
+                        else if(idNum >= 6823 && idNum <= 6846){
+                            busFleet.count6823to6846.count++;
                         }
-                        else{
+                        else if(idNum >= 6847 && idNum <= 6873){
+                            busFleet.count6847to6873.count++;
+                        }
+                        else if(idNum >= 6874 && idNum <= 6885){
+                            busFleet.count6874to6885.count++;
+                        }
+                        else if(idNum >= 6886 && idNum <= 6898){
+                            busFleet.count6886to6898.count++;
+                        }
+                        else if(idNum >= 7001 && idNum <= 7009){
+                            busFleet.count7001to7009.count++;
+                        }
+                        else if(idNum >= 7010 && idNum <= 7013) {
+                            busFleet.count7010to7013.count++;
+                        }
+                        else if(idNum >= 7014 && idNum <= 7033){
+                            busFleet.count7014to7033.count++;
+                        }
+                        else if(idNum >= 7165 && idNum <= 7172){
+                            busFleet.count7165to7172.count++;
+                        }
+                        else if(idNum >= 7173 && idNum <= 7174){
+                            busFleet.count7173to7174.count++;
+                        }
+                        else if(idNum >= 7175 && idNum <= 1785){
+                            busFleet.count7175to7185.count++;
+                        }
+                        else if(idNum >= 7186 && idNum <= 7192){
+                            busFleet.count7186to7192.count++;
+                        }
+                        else if(idNum >= 7300 && idNum <= 7309){
+                            busFleet.count7300to7309.count++;
+                        }
+                        else if(idNum >= 7310 && idNum <= 7323){
+                            busFleet.count7310to7323.count++;
+                        }
+                        else if(idNum >= 7324 && idNum <= 7328){
+                            busFleet.count7324to7328.count++;
+                        }
+                        else if(idNum >= 8065 && idNum <= 8081){
+                            busFleet.count8065to8081.count++;
+                        }
+                        else if(idNum >= 8082 && idNum <= 8101){
+                            busFleet.count8082to8101.count++;
+                        }
+                        else if(idNum >= 8102 && idNum <= 8121){
+                            busFleet.count8102to8121.count++;
+                        }
+                        else if(idNum >= 8122 && idNum <= 8127){
+                            busFleet.count8122to8127.count++;
+                        }
+                        else if(idNum >= 8128 && idNum <= 8155){
+                            busFleet.count8128to8155.count++;
+                        }
+                        else if(idNum >= 8521 && idNum <= 8530){
+                            busFleet.count8521to8530.count++;
+                        }
+                        else {
                             busFleet.unknown.count++;
                         }
                     }
