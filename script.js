@@ -93,10 +93,11 @@ async function fetchBusData() {
         vehicles.forEach(vehicle => {
             const vehicleId = vehicle.vehicle?.vehicle?.id;
             const routeId = vehicle.vehicle?.trip?.routeId;
+            const finalDestination = vehicle.vehicle?.vehicle?.label;
 
             if (vehicleId && routeId) {
                 const listItem = document.createElement("li");
-                listItem.textContent = `${vehicleId} on route ${routeId}`;
+                listItem.textContent = `${vehicleId} on route ${routeId} (final destination of ${finalDestination})`;
 
                 //Count fleet numbers
                 const idNum = parseInt(vehicleId, 10);
