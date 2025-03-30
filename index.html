@@ -8,9 +8,9 @@
 </head>
 <body>
     <h1>Valley Metro Vehicle Data</h1>
-    <p>Count by Make & Model:</p>
+    <h3>Count by Make & Model:</h3>
     <ul id="bus-summary"></ul>
-    <p>All fleet numbers currently active:</p>
+    <h3>All fleet numbers currently active:</h3>
     <ul id="bus-list"></ul>
     
     <p>Bus fleet data source <a href="https://cptdb.ca/wiki/index.php/Valley_Metro#Current" target="_blank">CPTDB Wiki</a></p>
@@ -42,7 +42,6 @@
                 
                 //DEF fleet numbers
                 let busFleet ={
-                    unknown: {count: 0, make: "Unknown"},
                     count101to150: {count: 0, year: 2008, make: "Kinki Sharyo", model: "LF LRV"}, //KinkiSharyo LRV
                     count180to185: {count: 0, year: 2021, make: "Bookville", model: "Liberty"}, //Brookville Liberty Streetcar
                     count201to225: {count: 0, year: 2021, make: "Siemens", model: "S700"}, //Siemens S700 LRV
@@ -106,6 +105,7 @@
                     count8122to8127: {count: 0, year: 2019, make: "New Flyer", model: "Xcelsior (XD60)", length: 60, fuel: "Diesel"}, //2019 NFI XD60
                     count8128to8155: {count: 0, year: 2020, make: "New Flyer", model: "Xcelsior (XD60)", length: 60, fuel: "Diesel"}, //2020 NFI XD60
                     count8521to8530: {count: 0, year: 2017, make: "New Flyer", model: "Xcelsior (XN60)", length: 60, fuel: "CNG"}, //2017 NFI XN60
+                    unknown: {count: 0, make: "Unknown"},
                 };
 
 
@@ -263,13 +263,15 @@
                     }
                 });
 
+                console.log("Vehicles:", vehicles);
+                console.log("Bus Fleet Count:", busFleet);
+
                 //Print out by Make/Model
                 for(const key in busFleet){
                     if(busFleet[key].count > 0){
-                        if(busFleet[key] == unknown){
+                        if(key === "unknown"){
                             busSummary.innerHTML += `${busFleet[key].count} - ${busFleet[key].make} <br>`;
-                        }
-                        else{
+                        } else {
                             busSummary.innerHTML += `${busFleet[key].count} - ${busFleet[key].year} ${busFleet[key].make} ${busFleet[key].model} <br>`;
                         }
                     }
