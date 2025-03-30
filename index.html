@@ -30,11 +30,11 @@
                 const data = await response.json();
                 const vehicles = data?.entity || [];
                 
-                const busList = document.getElementById("bus-list");
                 const busSummary = document.getElementById("bus-summary");
-                busList.innerHTML = "";
+                const busList = document.getElementById("bus-list");
                 busSummary.innerHTML = "";
-                
+                busList.innerHTML = "";
+
                 if (vehicles.length === 0) {
                     busList.innerHTML = "No active vehicles found.";
                     return;
